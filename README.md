@@ -15,7 +15,7 @@ A mod for the game Battle Brothers ([Steam](https://store.steampowered.com/app/3
 
 Rebalances a number game elements, particularly weapons, that I felt were out of sync with the game's overall design. Any balance change in a game as tightly balanced as Battle Brothers will likely be controversial, so I've attempted to capture my thoughts on each change in a [separate document](./reasoning.md). I don't expect it to satisfy anyone, but you can judge for yourself.
 
-This mod doesn't touch enemies themselves - for that, look at my [enemy rebalance mod](https://github.com/jcsato/sato_enemy_rebalance_mod).
+This mod doesn't touch enemies themselves - for that, look at my [enemy rebalance mod](https://github.com/jcsato/sato_enemy_balance_mod).
 
 **Named Weapons:**
 - Named Weapon armor penetration now rolls +6-12% (down from +8-16%)
