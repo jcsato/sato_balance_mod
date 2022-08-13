@@ -112,7 +112,7 @@
 	});
 
 	::mods_hookNewObject("skills/actives/lunge_skill", function(ls) {
-		::mods_override(as, "onAnySkillUsed", function(_skill, _targetEntity, _properties) {
+		::mods_override(ls, "onAnySkillUsed", function(_skill, _targetEntity, _properties) {
 			if (_skill == this) {
 				local a = getContainer().getActor();
 				local s = Math.maxf(1.0, Math.minf(2.0, 2.0 * (Math.max(0, a.getInitiative() + (_targetEntity != null ? getFatigueCost() * a.getCurrentProperties().FatigueToInitiativeRate : 0)) / 160.0)));
