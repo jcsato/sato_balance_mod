@@ -1,0 +1,1 @@
+::mods_registerMod("sato_balance_mod", 1.2, "Sato's Balance Mod");
