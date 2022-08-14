@@ -1,1 +1,1 @@
-::mods_registerMod("sato_balance_mod", 1.2.1, "Sato's Balance Mod");
+::mods_registerMod("sato_balance_mod", 1.2.2, "Sato's Balance Mod");

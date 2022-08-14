@@ -37,7 +37,7 @@
 			return ret;
 		});
 
-		::mods_override(ct, "onUpdate", function() {
+		::mods_override(ct, "onUpdate", function(_properties) {
 			_properties.Bravery			+= 10;
 			_properties.MeleeDefense	+= -5;
 			_properties.RangedDefense	+= -5;
@@ -61,7 +61,7 @@
 			return ret;
 		});
 
-		::mods_override(tt, "onUpdate", function() {
+		::mods_override(tt, "onUpdate", function(_properties) {
 			_properties.MeleeDamageMult		*= 0.9;
 			_properties.MeleeDefense		+= 5;
 			_properties.RangedDefense		+= 5;
