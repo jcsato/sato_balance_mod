@@ -1,7 +1,9 @@
 ::mods_queue("sato_balance_mod", "", function() {
 	::mods_hookExactClass("skills/traits/brute_trait", function(bt) {
+		local getTooltip = ::mods_getMember(bt, "getTooltip");
+
 		::mods_override(bt, "getTooltip", function() {
-			local ret = getDefaultTooltip();
+			local ret = getTooltip();
 
 			ret.pop();
 			ret.pop();
@@ -21,8 +23,10 @@
 	});
 
 	::mods_hookExactClass("skills/traits/cocky_trait", function(ct) {
+		local getTooltip = ::mods_getMember(ct, "getTooltip");
+
 		::mods_override(ct, "getTooltip", function() {
-			local ret = getDefaultTooltip();
+			local ret = getTooltip();
 
 			ret.pop();
 			ret.pop();
@@ -45,8 +49,10 @@
 	});
 
 	::mods_hookExactClass("skills/traits/tiny_trait", function(tt) {
+		local getTooltip = ::mods_getMember(tt, "getTooltip");
+
 		::mods_override(tt, "getTooltip", function() {
-			local ret = getDefaultTooltip();
+			local ret = getTooltip();
 
 			ret.pop();
 			ret.pop();

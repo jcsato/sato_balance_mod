@@ -16,6 +16,9 @@
 			} else if (m.ID == "weapon.javelin" || m.ID == "weapon.heavy_javelin" || m.ID == "weapon.orc_javelin") {
 				m.Ammo -= 2;
 				m.AmmoMax -= 2;
+			} else if (m.ID == "weapon.throwing_axe" || m.ID == "weapon.heavy_throwing_axe") {
+				m.Ammo -= 1;
+				m.AmmoMax -= 1;
 			}
 		}
 	});
@@ -27,6 +30,16 @@
 			randomizeValues();
 			m.Ammo -= 2;
 			m.AmmoMax -= 2;
+		});
+	});
+
+	::mods_hookExactClass("items/weapons/named/named_throwing_axe", function(nta) {
+		local randomizeValues = ::mods_getMember(nta, "randomizeValues");
+
+		::mods_override(nta, "randomizeValues", function() {
+			randomizeValues();
+			m.Ammo -= 1;
+			m.AmmoMax -= 1;
 		});
 	});
 

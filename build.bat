@@ -4,7 +4,7 @@ REM NOTE: This is a DEVELOPER script. You don't need this just to play with the 
 
 set modname=sato_balance_mod
 set modkitdir=YOUR_MODKIT_BIN_PATH
-set version=1.2.2
+set version=1.3
 
 echo.
 echo Creating temporary directory...
