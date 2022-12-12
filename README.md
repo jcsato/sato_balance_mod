@@ -19,12 +19,13 @@ This mod doesn't touch enemies themselves - for that, look at my [enemy rebalanc
 
 **Named Weapons:**
 - Named Weapon armor penetration now rolls +6-12% (down from +8-16%)
-- Named Weapon armor effectiveness rolls +15-35% (up from 10-30%)
+- Named Weapon armor effectiveness now rolls +15-35% (up from 10-30%)
 - Named Weapons will no longer roll for reduced Fatigue on equip at all (reduced Fatigue build up on skill use is still possible)
 
 **Perks:**
 - Sword Mastery no longer removes the hit malus of Riposte, instead granting +5 Melee Defense while Riposting if the offhand is free
 - Taunt costs 10 Fatigue (down from 15)
+- Lone Wolf now grants a +10% stat bonus at 2 tiles distance from allies (down from a +15% stat bonus at 3 tiles of distance)
 
 **Retinue:**
 - Instead of increasing your speed by 15% on all terrain, the Scout now reduces the speed penalty of "rough terrain" (forests, swamps, etc. and not snow or desert) by 15%. By way of example: in vanilla, the player moves 7.5% faster on swamps, 9.75% faster on forests, and 15% faster on plains with the Scout. With this change, they'd now move 15%, 15%, and 0% faster. Also, renames him to "the Guide".
@@ -42,8 +43,9 @@ This mod doesn't touch enemies themselves - for that, look at my [enemy rebalanc
 - Greatswords now deal 85-105 damage at 30% armor penetration (up from 85-100 at 25%)
 - Heavy Rusty Axes now deal 70-90 damage (down from 75-90)
 - Javelins now have 3 ammo per stack
+- Throwing Axes now have 4 ammo per stack
 - The Aimed Shot skill of Bows now deals an additional +15% damage and has +15% to hit (up from +10% to both)
-- The Lunge skill of Fencing Swords now caps (and scales) at 160 Iniatiative (down from 175) and can no longer deal below 100% of its damage
+- The Lunge skill of Fencing Swords now caps (and scales) at 160 Initiative (down from 175) and can no longer deal below 100% of its damage
 
 ## Requirements
 
