@@ -1,5 +1,5 @@
 ::mods_queue("sato_balance_mod", "", function() {
-	::mods_hookExactClass("retinue/followers/scout_follower", function(sf) {
+	::mods_hookNewObject("retinue/followers/scout_follower", function(sf) {
 		::mods_override(sf, "onUpdate", function() {
 			for( local i = 0; i < World.Assets.m.TerrainTypeSpeedMult.len(); i = ++i )
 			{
