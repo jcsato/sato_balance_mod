@@ -53,7 +53,7 @@
 		});
 	});
 
-	::mods_hookExactClass("skills/actives/taunt", function(t) {
+	::mods_hookNewObject("skills/actives/taunt", function(t) {
 		::mods_addField(t, "taunt", "FatigueCost", 10);
 	});
 
