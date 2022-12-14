@@ -13,7 +13,7 @@ A mod for the game Battle Brothers ([Steam](https://store.steampowered.com/app/3
 
 ## Features
 
-Rebalances a number game elements, particularly weapons, that I felt were out of sync with the game's overall design. Any balance change in a game as tightly balanced as Battle Brothers will likely be controversial, so I've attempted to capture my thoughts on each change in a [separate document](./reasoning.md). I don't expect it to satisfy anyone, but you can judge for yourself.
+Rebalances a number game elements, particularly weapons, that I felt were out of sync with the game's overall design. Any balance change in a game as tightly balanced as Battle Brothers will likely be controversial, so I don't expect these to appeal to everyone - but, for what it's worth, every change comes from a conversation I've had with the devs or beta testers and has gone through at least a couple rounds of polish and iteration.
 
 This mod doesn't touch enemies themselves - for that, look at my [enemy rebalance mod](https://github.com/jcsato/sato_enemy_balance_mod).
 
@@ -28,7 +28,7 @@ This mod doesn't touch enemies themselves - for that, look at my [enemy rebalanc
 - Lone Wolf now grants a +10% stat bonus at 2 tiles distance from allies (down from a +15% stat bonus at 3 tiles of distance)
 
 **Retinue:**
-- Instead of increasing your speed by 15% on all terrain, the Scout now reduces the speed penalty of "rough terrain" (forests, swamps, etc. and not snow or desert) by 15%. By way of example: in vanilla, the player moves 7.5% faster on swamps, 9.75% faster on forests, and 15% faster on plains with the Scout. With this change, they'd now move 15%, 15%, and 0% faster. Also, renames him to "the Guide".
+- Instead of increasing your speed by 15% on all terrain, the Scout now reduces the speed penalty of "rough terrain" (forests, swamps, etc. and not snow or desert) by 15%. By way of example: in vanilla, the player moves 7.5% faster on swamps, 9.75% faster on forests, and 15% faster on plains with the Scout. With this change, they'd now move 15%, 15%, and 0% faster. Also, he's been renamed to "the Guide" to better reflect his function.
 
 **Traits:**
 - Brute grants +35% damage on head hits (up from +15%)
