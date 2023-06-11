@@ -18,11 +18,7 @@
 		if (!Tactical.isActive())
 			return false;
 
-		// local actor = getContainer().getActor();
-		// local wounded = actor.getSkills().hasSkill("effects.bleeding") || actor.getSkills().hasSkill("injury.cut_artery") || actor.getSkills().hasSkill("injury.cut_throat") || actor.getSkills().hasSkill("injury.grazed_neck");
-
-		// local tile = actor.getTile();
-		return skill.isUsable();// && (wounded || !tile.hasZoneOfControlOtherThan(getContainer().getActor().getAlliedFactions()));
+		return skill.isUsable();
 	}
 
 	bas.onVerifyTarget = function(_originTile, _targetTile) {
@@ -33,9 +29,6 @@
 
 		if (!m.Container.getActor().isAlliedWith(target))
 			return false;
-
-		// if (_targetTile.getEntity() != _originTile.getEntity() && _targetTile.hasZoneOfControlOtherThan(m.Container.getActor().getAlliedFactions()))
-		// 	return false;
 
 		if (target.getSkills().hasSkill("effects.bleeding"))
 			return true;
@@ -60,7 +53,8 @@
 	bas.onUse = function(_user, _targetTile) {
 		onUse(_user, _targetTile);
 
-		_user.getSkills().add(new("scripts/skills/effects/vulnerable_effect"));
+		local target = _targetTile.getEntity();
+		target.getSkills().add(new("scripts/skills/effects/vulnerable_effect"));
 
 		return true;
 	}

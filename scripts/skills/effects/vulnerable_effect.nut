@@ -16,7 +16,7 @@ vulnerable_effect <- inherit("scripts/skills/skill", {
 	}
 
 	function getDescription() {
-		return "This character directed his focus away from combat to treat a wound. Vulnerable for [color=" + Const.UI.Color.NegativeValue + "]" + m.TurnsLeft + "[/color] more turn(s), their defensive abilities are comprised and they make an easier target than normal.";
+		return "This character directed his focus away from combat to treat a wound. Vulnerable for [color=" + Const.UI.Color.NegativeValue + "]" + m.TurnsLeft + "[/color] more round(s), their defensive abilities are comprised and they make an easier target than normal.";
 	}
 
 	function getTooltip() {
@@ -41,7 +41,7 @@ vulnerable_effect <- inherit("scripts/skills/skill", {
 		_properties.RangedDefense		-= 10;
 	}
 
-	function onTurnEnd() {
+	function onRoundEnd() {
 		if (--m.TurnsLeft <= 0)
 			removeSelf();
 	}
