@@ -49,6 +49,7 @@ This mod doesn't touch enemies themselves - for that, look at my [enemy rebalanc
 - Greatswords now deal 85-105 damage at 30% armor penetration (up from 85-100 at 25%)
 - Heavy Rusty Axes now deal 70-90 damage (down from 75-90)
 - Woodcutter's Axes now deal 50-75 damage (up from 35-70)
+- All bows now have +5% armor effectiveness
 - Goblin bolas, bows, daggers, spears, and swords have an innate -3 Fatigue build up on skill use
 - Javelins now have 3 ammo per stack
 - Throwing Axes now have 4 ammo per stack
