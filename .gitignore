@@ -1,3 +1,5 @@
 dist/
 old_versions/
 *.afphoto
+
+ini.cfg

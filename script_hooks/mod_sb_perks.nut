@@ -13,6 +13,11 @@ local perk = ::Const.Perks.Perks[4][2];
 if (perk.ID == "perk.lone_wolf")
 	perk.Tooltip = ::Const.Strings.PerkDescription.LoneWolf;
 
+::Const.Strings.PerkDescription.Nimble = "Specialize in light armor! By nimbly dodging or deflecting blows, reduce hitpoint damage taken by up to [color=" + Const.UI.Color.PositiveValue + "]60%[/color]. The reduction is lowered by the total Maximum Fatigue penalty from body and head armor above [color=" + Const.UI.Color.PositiveValue + "]15[/color], and halved for blows struck against unarmored body parts.\n\nBrawny does not affect this perk.\n\nDoes not affect damage from mental attacks or status effects, but can help to avoid receiving them.";
+local perk = ::Const.Perks.Perks[5][2];
+if (perk.ID == "perk.nimble")
+	perk.Tooltip = ::Const.Strings.PerkDescription.Nimble;
+
 ::mods_hookExactClass("skills/actives/riposte", function(r) {
 	local getTooltip = ::mods_getMember(r, "getTooltip");
 
@@ -25,8 +30,10 @@ if (perk.ID == "perk.lone_wolf")
 
 		local actor = getContainer().getActor();
 
-		if (actor.getCurrentProperties().IsSpecializedInSwords)
+		if (actor.getCurrentProperties().IsSpecializedInSwords) {
+			ret.push({ id = 4, type = "text", icon = "ui/icons/hitchance.png", text = "Has [color=" + Const.UI.Color.NegativeValue + "]-10%[/color] chance to hit" });
 			ret.push({ id = 5, type = "text", icon = "ui/icons/melee_defense.png", text = "[color=" + Const.UI.Color.PositiveValue + "]+5[/color] Melee Defense when the offhand is free" });
+		}
 
 		return ret;
 	});
@@ -92,7 +99,7 @@ if (perk.ID == "perk.lone_wolf")
 
 ::mods_hookNewObject("skills/actives/taunt", function(t) {
 	// ::mods_addField(t, "taunt", "ActionPointCost", 4);
-	::mods_addField(t, "taunt", "FatigueCost", 10);		// Default 15
+	::mods_addField(t, "taunt", "FatigueCost", 12);		// Default 15
 });
 
 ::mods_hookNewObject("skills/actives/rotation", function(r) {
@@ -150,5 +157,32 @@ if (perk.ID == "perk.lone_wolf")
 		}
 		else
 			m.IsHidden = true;
+	});
+});
+
+::mods_hookExactClass("skills/perks/perk_nimble", function(pn) {
+	local getTooltip = ::mods_getMember(pn, "getTooltip");
+
+	::mods_override(pn, "getTooltip", function() {
+		local ret = getTooltip();
+		local fm = Math.round((getChance()) * 100);
+
+		if (fm < 100)
+			ret.push({ id = 7, type = "text", icon = "ui/icons/warning.png", text = "Damage reduction is halved for blows stuck against unarmored body parts" });
+
+		return ret;
+	});
+
+	::mods_override(pn, "onBeforeDamageReceived", function(_attacker, _skill, _hitInfo, _properties) {
+		local actor = getContainer().getActor();
+		if ((_attacker != null && _attacker.getID() == getContainer().getActor().getID()) || _skill == null || !_skill.isAttack() || !_skill.isUsingHitchance())
+			return;
+
+		local reduction = getChance();
+
+		if (actor.getArmor(_hitInfo.BodyPart) == 0 && _hitInfo.DamageInflictedArmor == 0)
+			reduction = reduction + Math.maxf(0, (1.0 - reduction) / 2);
+
+		_properties.DamageReceivedRegularMult *= reduction;
 	});
 });

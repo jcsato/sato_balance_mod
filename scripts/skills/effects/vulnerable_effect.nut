@@ -1,6 +1,8 @@
 vulnerable_effect <- inherit("scripts/skills/skill", {
 	m = {
-		TurnsLeft	= 1
+		Count			= 1
+		DefenseMalus	= 4
+		TurnsLeft		= 1
 	}
 
 	function create() {
@@ -23,9 +25,16 @@ vulnerable_effect <- inherit("scripts/skills/skill", {
 		return [
 					{ id = 1, type = "title", text = getName() }
 					{ id = 2, type = "description", text = getDescription() }
-					{ id = 10, type = "text", icon = "ui/icons/melee_defense.png", text = "[color=" + Const.UI.Color.NegativeValue + "]-10[/color] Melee Defense" }
-					{ id = 11, type = "text", icon = "ui/icons/ranged_defense.png", text = "[color=" + Const.UI.Color.NegativeValue + "]-10[/color] Ranged Defense" }
+					{ id = 10, type = "text", icon = "ui/icons/melee_defense.png", text = "[color=" + Const.UI.Color.NegativeValue + "]-" + m.DefenseMalus * m.Count + "[/color] Melee Defense" }
+					{ id = 11, type = "text", icon = "ui/icons/ranged_defense.png", text = "[color=" + Const.UI.Color.NegativeValue + "]-" + m.DefenseMalus * m.Count + "[/color] Ranged Defense" }
 				];
+	}
+
+	function getName() {
+		if (m.Count <= 1)
+			return m.Name;
+		else
+			return m.Name + " (x" + m.Count + ")";
 	}
 
 	function onAdded() {
@@ -34,11 +43,13 @@ vulnerable_effect <- inherit("scripts/skills/skill", {
 
 	function onRefresh() {
 		m.TurnsLeft = Math.max(1, 1 + getContainer().getActor().getCurrentProperties().NegativeStatusEffectDuration);
+		++m.Count;
+		getContainer().update();
 	}
 
 	function onUpdate(_properties) {
-		_properties.MeleeDefense		-= 10;
-		_properties.RangedDefense		-= 10;
+		_properties.MeleeDefense	-= m.DefenseMalus * m.Count;
+		_properties.RangedDefense	-= m.DefenseMalus * m.Count;
 	}
 
 	function onRoundEnd() {

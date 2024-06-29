@@ -1,8 +1,7 @@
 ::mods_hookBaseClass("items/weapons/weapon", function(w) {
 	local create = ::mods_getMember(w, "create");
 
-	w.create = function()
-	{
+	w.create = function() {
 		create();
 		if (m.ID == "weapon.handgonne") {
 			m.RegularDamage = 40;    	// Default 35
@@ -32,6 +31,74 @@
 			m.FatigueOnSkillUse += -3;
 		}
 	}
+});
+
+::mods_hookExactClass("skills/actives/ignite_firelance_skill", function(ifs) {
+	local getTooltip			= ::mods_getMember(ifs, "getTooltip");
+	local applyEffectToTargets	= ::mods_getMember(ifs, "applyEffectToTargets");
+
+	::mods_override(ifs, "getTooltip", function() {
+		local ret = getTooltip();
+
+		ret.insert(ret.len() - 1, { id = 6, type = "text", icon = "ui/icons/special.png", text = "Set [color=" + Const.UI.Color.DamageValue + "]2[/color] tiles in the direction of the attack ablaze with fire for 2 rounds. Water and snow can not burn." } );
+		ret.insert(ret.len() - 1, { id = 6, type = "text", icon = "ui/icons/special.png", text = "Burns away existing tile effects like Smoke or Miasma" } );
+
+		return ret;
+	});
+
+	::mods_override(ifs, "applyEffectToTargets", function(_tag) {
+		// First, recalculate which tiles should be affected
+		// This needs to happen before calling `applyEffectToTargets` in case _tag.Targets[0] is dead
+		local targetTile = _tag.Targets[0].getTile();
+		local dir = _tag.User.getTile().getDirectionTo(targetTile)
+		local tiles = [ targetTile ];
+
+		if (targetTile.hasNextTile(dir)) {
+			local nextTile = targetTile.getNextTile(dir);
+
+			if (Math.abs(nextTile.Level - _tag.User.getTile().Level) <= 1)
+				tiles.push(nextTile);
+		}
+
+		applyEffectToTargets(_tag);
+
+		local fireEffect = {
+			Type					= "fire"
+			Tooltip					= "Fire rages here, melting armor and flesh alike"
+			IsPositive				= false
+			IsAppliedAtRoundStart	= false
+			IsAppliedAtTurnEnd		= true
+			IsAppliedOnMovement		= false
+			IsAppliedOnEnter		= false
+			IsByPlayer				= _tag.User.isPlayerControlled()
+			Timeout					= Time.getRound() + 2
+			Callback				= Const.Tactical.Common.onApplyFire
+			Applicable				= function(_a) { return true; }
+		};
+
+		foreach (tile in tiles) {
+			if (tile.Subtype != Const.Tactical.TerrainSubtype.Snow && tile.Subtype != Const.Tactical.TerrainSubtype.LightSnow && tile.Type != Const.Tactical.TerrainType.ShallowWater && tile.Type != Const.Tactical.TerrainType.DeepWater) {
+				if (tile.Properties.Effect != null && tile.Properties.Effect.Type == "fire") {
+					tile.Properties.Effect.Timeout = Time.getRound() + 2;
+				} else {
+					if (tile.Properties.Effect != null)
+						Tactical.Entities.removeTileEffect(tile);
+
+					tile.Properties.Effect = clone fireEffect;
+
+					local particles = [];
+					for (local i = 0; i < Const.Tactical.FireParticles.len(); ++i) {
+						particles.push(Tactical.spawnParticleEffect(true, Const.Tactical.FireParticles[i].Brushes, tile, Const.Tactical.FireParticles[i].Delay, Const.Tactical.FireParticles[i].Quantity, Const.Tactical.FireParticles[i].LifeTimeQuantity, Const.Tactical.FireParticles[i].SpawnRate, Const.Tactical.FireParticles[i].Stages));
+					}
+
+					Tactical.Entities.addTileEffect(tile, tile.Properties.Effect, particles);
+
+					tile.clear(Const.Tactical.DetailFlag.Scorchmark);
+					tile.spawnDetail("impact_decal", Const.Tactical.DetailFlag.Scorchmark, false, true);
+				}
+			}
+		}
+	});
 });
 
 ::mods_hookExactClass("items/weapons/named/named_goblin_falchion", function(ngf) {

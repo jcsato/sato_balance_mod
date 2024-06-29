@@ -23,10 +23,11 @@ This mod doesn't touch enemies themselves - for that, look at my [enemy rebalanc
 - Named Weapons will no longer roll for reduced Fatigue on equip at all (reduced Fatigue build up on skill use is still possible)
 
 **Perks:**
+- The damage reduction granted by Nimble is now halved for blows struck against body parts with no armor (e.g. after armor is destroyed)
 - Dagger Mastery now reduces the hit malus of Puncture to -10 (from -15)
 - Sword Mastery no longer removes the hit malus of Riposte, instead granting +5 Melee Defense while Riposting if the offhand is free
 - Lone Wolf now grants a +10% stat bonus at 2 tiles distance from allies (down from a +15% stat bonus at 3 tiles of distance)
-- Taunt costs 10 Fatigue (down from 15)
+- Taunt costs 12 Fatigue (down from 15)
 - Rotation costs 20 Fatigue (down from 25)
 - Footwork costs 18 Fatigue (down from 20)
 
@@ -34,9 +35,10 @@ This mod doesn't touch enemies themselves - for that, look at my [enemy rebalanc
 - Instead of increasing your speed by 15% on all terrain, the Scout now reduces the speed penalty of "rough terrain" (forests, swamps, etc. and not snow or desert) by 15%. By way of example: in vanilla, the player moves 7.5% faster on swamps, 9.75% faster on forests, and 15% faster on plains with the Scout. With this change, they'd now move 15%, 15%, and 0% faster. Also, he's been renamed to "the Guide" to better reflect his function.
 
 **Traits:**
-- Brute grants +35% damage on head hits (up from +15%)
+- Brute grants +30% damage on head hits (up from +15%)
 - Cocky grants +10 Resolve (up from +5)
 - Tiny reduces Melee Damage by -10% (up from -15%)
+- Weasel grants +20 Melee Defense (down from +25) and is active when retreating OR Fleeing (instead of just when retreating)
 
 **Tryout:**
 - Tryout now grants increased mood and +10% XP Gain for 2 days
@@ -55,10 +57,11 @@ This mod doesn't touch enemies themselves - for that, look at my [enemy rebalanc
 - Throwing Axes now have 4 ammo per stack
 - The Aimed Shot skill of Bows now deals an additional +15% damage and has +15% to hit (up from +10% to both)
 - The Lunge skill of Fencing Swords now caps (and scales) at 160 Initiative (down from 175) and can no longer deal below 100% of its damage
+- The Ignite Firelance skill of Firelances now leaves flames on the ground in its attack AoE, like firebombs do
 
 **Miscellaneous:**
 - Bandages can now be used while engaged in melee
-- Using bandages on a character confers the new "Vulnerable" status effect, which reduces Melee and Ranged defense by 10 for a turn
+- Using bandages on a character confers the new "Vulnerable" status effect to both the user and the patient (or two stacks if self-bandaging), which reduces Melee and Ranged defense by 4 for a turn
 - Antidotes now last for 10 turns (up from 3)
 - The War Wolf now has 50/30 innate body/head armor
 
