@@ -1,3 +1,13 @@
+::Const.Strings.PerkDescription.Recover = "Unlocks the 'Recover' skill which allows for resting a turn in order to reduce accumulated Fatigue by [color=" + Const.UI.Color.NegativeValue + "]50%[/color], to a minimum of [color=" + Const.UI.Color.PositiveValue + "]30[/color].";
+local perk = ::Const.Perks.Perks[0][7];
+if (perk.ID == "perk.recover")
+	perk.Tooltip = ::Const.Strings.PerkDescription.Recover;
+
+::Const.Strings.PerkDescription.SpecFlail = "Master flails and circumvent your opponent's shield. Skills build up [color=" + Const.UI.Color.NegativeValue + "]25%[/color] less Fatigue.\n\nLash and Hail ignore the defense bonus of shields, and Lash has a [color=" + Const.UI.Color.PositiveValue + "]100%[/color] chance to Daze the target if not immune.\n\nPound ignores an additional [color=" + Const.UI.Color.PositiveValue + "]+10%[/color] of armor on head hits.\n\nThresh gains [color=" + Const.UI.Color.PositiveValue + "]+5%[/color] chance to hit.";
+local perk = ::Const.Perks.Perks[3][1];
+if (perk.ID == "perk.mastery.flail")
+	perk.Tooltip = ::Const.Strings.PerkDescription.SpecFlail;
+
 ::Const.Strings.PerkDescription.SpecSword = "Master the art of swordfighting and using your opponent's mistakes to your advantage. Skills build up [color=" + Const.UI.Color.NegativeValue + "]25%[/color] less Fatigue.\n\nRiposte gives [color=" + Const.UI.Color.PositiveValue + "]+5[/color] Melee Defense with the offhand free.\n\nGash has a [color=" + Const.UI.Color.NegativeValue + "]50%[/color] lower threshold to inflict injuries.\n\nSplit and Swing no longer have a penalty to hitchance and gain [color=" + Const.UI.Color.PositiveValue + "]+5%[/color] chance to hit.";
 local perk = ::Const.Perks.Perks[3][5];
 if (perk.ID == "perk.mastery.sword")
@@ -98,7 +108,6 @@ if (perk.ID == "perk.nimble")
 });
 
 ::mods_hookNewObject("skills/actives/taunt", function(t) {
-	// ::mods_addField(t, "taunt", "ActionPointCost", 4);
 	::mods_addField(t, "taunt", "FatigueCost", 12);		// Default 15
 });
 
@@ -184,5 +193,40 @@ if (perk.ID == "perk.nimble")
 			reduction = reduction + Math.maxf(0, (1.0 - reduction) / 2);
 
 		_properties.DamageReceivedRegularMult *= reduction;
+	});
+});
+
+
+::mods_hookExactClass("skills/actives/recover_skill", function(rs) {
+	local getTooltip = ::mods_getMember(rs, "getTooltip");
+	local onUse = ::mods_getMember(rs, "onUse");
+
+	::mods_override(rs, "getTooltip", function() {
+		local ret = getTooltip();
+
+		local tips = [];
+		local lastItem = "";
+		do {
+			lastItem = ret.pop();
+			if (lastItem.text == "Current Fatigue is reduced by half")
+				break;
+			else
+				tips.push(lastItem);
+		} while (lastItem.text != "Current Fatigue is reduced by half" && ret.len() > 0)
+
+		lastItem.text += ", to a minimum of [color=" + Const.UI.Color.PositiveValue + "]30[/color]"
+		ret.push(lastItem);
+		foreach (tip in tips)
+			ret.push(tip);
+
+		return ret;
+	});
+
+	::mods_override(rs, "onUse", function(_user, _targetTile) {
+		local currentFatigue = _user.getFatigue();
+		onUse(_user, _targetTile);
+
+		if ((currentFatigue - 30) < _user.getFatigue())
+			_user.setFatigue(currentFatigue - 30);
 	});
 });

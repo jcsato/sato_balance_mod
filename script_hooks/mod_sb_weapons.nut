@@ -50,15 +50,18 @@
 		// First, recalculate which tiles should be affected
 		// This needs to happen before calling `applyEffectToTargets` in case _tag.Targets[0] is dead
 		local targetTile = _tag.Targets[0].getTile();
-		local dir = _tag.User.getTile().getDirectionTo(targetTile)
+		local userTile = _tag.User.getTile();
+		local dir = userTile.getDirectionTo(targetTile)
 		local tiles = [ targetTile ];
 
-		if (targetTile.hasNextTile(dir)) {
-			local nextTile = targetTile.getNextTile(dir);
+		local nextTile = null;
+		if (userTile.getDistanceTo(targetTile) > 1 && userTile.hasNextTile(dir))
+			nextTile = userTile.getNextTile(dir);
+		else if (targetTile.hasNextTile(dir))
+			nextTile = targetTile.getNextTile(dir);
 
-			if (Math.abs(nextTile.Level - _tag.User.getTile().Level) <= 1)
-				tiles.push(nextTile);
-		}
+		if (nextTile != null && Math.abs(nextTile.Level - userTile.Level) <= 1)
+			tiles.push(nextTile);
 
 		applyEffectToTargets(_tag);
 
@@ -239,7 +242,7 @@
 	});
 });
 
-::mods_hookNewObject("skills/actives/lunge_skill", function(ls) {
+::mods_hookExactClass("skills/actives/lunge_skill", function(ls) {
 	::mods_override(ls, "onAnySkillUsed", function(_skill, _targetEntity, _properties) {
 		if (_skill == this) {
 			local a = getContainer().getActor();
@@ -247,5 +250,59 @@
 
 			_properties.DamageTotalMult		*= s;
 		}
+	});
+});
+
+::mods_hookNewObject("skills/actives/lash_skill", function(ls) {
+	local getTooltip = ::mods_getMember(ls, "getTooltip");
+	local onUse = ::mods_getMember(ls, "onUse");
+
+	::mods_override(ls, "getTooltip", function() {
+		local ret = getTooltip();
+		local chance = getContainer().getActor().getCurrentProperties().IsSpecializedInFlails ? "100" : "50";
+
+		ret.insert(ret.len() - 1, { id = 7, type = "text", icon = "ui/icons/special.png", text = "Has a [color=" + Const.UI.Color.PositiveValue + "]" + chance + "%[/color] chance to daze on a hit" });
+
+		return ret;
+	});
+
+	::mods_override(ls, "onUse", function(_user, _targetTile) {
+		local target = _targetTile.getEntity();
+		local stunChance = _user.getCurrentProperties().IsSpecializedInFlails ? 100 : 50;
+		local success = onUse(_user, _targetTile);
+
+		if (success && target.isAlive() && !target.getCurrentProperties().IsImmuneToDaze) {
+			if (Math.rand(1, 100) <= stunChance) {
+				target.getSkills().add(new("scripts/skills/effects/dazed_effect"));
+				
+				if (!_user.isHiddenToPlayer() && _targetTile.IsVisibleForPlayer)
+					Tactical.EventLog.log(Const.UI.getColorizedEntityName(_user) + " struck a blow that leaves " + Const.UI.getColorizedEntityName(_targetTile.getEntity()) + " dazed");
+			}
+		}
+
+		return success;
+	});
+});
+
+::mods_hookExactClass("skills/actives/split_shield", function(ss) {
+	local getTooltip = ::mods_getMember(ss, "getTooltip");
+	local onUse = ::mods_getMember(ss, "onUse");
+
+	::mods_override(ss, "getTooltip", function() {
+		local ret = getTooltip();
+
+		ret.push({ id = 9, type = "text", icon = "ui/icons/special.png", text = "Inflicts [color=" + Const.UI.Color.DamageValue + "]10[/color] extra fatigue" });
+
+		return ret;
+	});
+
+	::mods_override(ss, "onUse", function(_user, _targetTile) {
+		local success = onUse(_user, _targetTile);
+		local hitInfo = clone Const.Tactical.HitInfo;
+
+		hitInfo.DamageFatigue = 10;
+
+		if (success && _targetTile.getEntity().getItems().getItemAtSlot(Const.ItemSlot.Offhand) != null)
+			_targetTile.getEntity().onDamageReceived(_user, this, hitInfo);
 	});
 });

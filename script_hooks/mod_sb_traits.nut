@@ -82,9 +82,7 @@
 
 		ret.pop();
 
-		ret.extend([
-			{ id = 10, type = "text", icon = "ui/icons/melee_defense.png", text = "[color=" + this.Const.UI.Color.PositiveValue + "]+20[/color] Melee Defense while retreating or fleeing" }
-		]);
+		ret.extend([ { id = 10, type = "text", icon = "ui/icons/melee_defense.png", text = "[color=" + Const.UI.Color.PositiveValue + "]+20[/color] Melee Defense while retreating or fleeing" } ]);
 
 		return ret;
 	});
@@ -97,5 +95,251 @@
 
 		if (actor.isPlacedOnMap() && (Tactical.State.isAutoRetreat() || actor.getMoraleState() == Const.MoraleState.Fleeing) && Tactical.TurnSequenceBar.getActiveEntity() != null && Tactical.TurnSequenceBar.getActiveEntity().getID() == actor.getID())
 			_properties.MeleeDefense += 20;
+	});
+});
+
+::mods_hookExactClass("skills/traits/fear_beasts_trait", function(fbt) {
+	local getTooltip = ::mods_getMember(fbt, "getTooltip");
+	local onCombatStarted = ::mods_getMember(fbt, "onCombatStarted");
+
+	::mods_override(fbt, "getTooltip", function() {
+		local ret = getTooltip();
+
+		ret.pop();
+
+		ret.extend([ { id = 10, type = "text", icon = "ui/icons/morale.png", text = "Will start combat against beasts at wavering morale" } ]);
+
+		return ret;
+	});
+
+	::mods_override(fbt, "onCombatStarted", function() {
+		onCombatStarted();
+
+		local actor = getContainer().getActor();
+
+		if (!actor.isPlacedOnMap())
+			return;
+
+		local fightingBeasts = false;
+		local enemies = Tactical.Entities.getAllHostilesAsArray();
+
+		foreach (enemy in enemies) {
+			if (Const.EntityType.getDefaultFaction(enemy.getType()) == Const.FactionType.Beasts || enemy.getType() == Const.EntityType.BarbarianUnhold || enemy.getType() == Const.EntityType.BarbarianUnholdFrost) {
+				fightingBeasts = true;
+				break;
+			}
+		}
+
+		if (fightingBeasts) {
+			spawnIcon("trait_icon_48", actor.getTile());
+
+			if (actor.getMoraleState() > Const.MoraleState.Wavering)
+				actor.setMoraleState(Const.MoraleState.Wavering);
+		}
+	});
+});
+
+::mods_hookExactClass("skills/traits/fear_greenskins_trait", function(fgt) {
+	local getTooltip = ::mods_getMember(fgt, "getTooltip");
+	local onCombatStarted = ::mods_getMember(fgt, "onCombatStarted");
+
+	::mods_override(fgt, "getTooltip", function() {
+		local ret = getTooltip();
+
+		ret.pop();
+
+		ret.extend([ { id = 10, type = "text", icon = "ui/icons/morale.png", text = "Will start combat against greenskins at wavering morale" } ]);
+
+		return ret;
+	});
+
+	::mods_override(fgt, "onCombatStarted", function() {
+		onCombatStarted();
+
+		local actor = getContainer().getActor();
+
+		if (!actor.isPlacedOnMap())
+			return;
+
+		local fightingGreenskins = false;
+		local enemies = Tactical.Entities.getAllHostilesAsArray();
+
+		foreach (enemy in enemies) {
+			if (Const.EntityType.getDefaultFaction(enemy.getType()) == Const.FactionType.Orcs || Const.EntityType.getDefaultFaction(enemy.getType()) == Const.FactionType.Goblins) {
+				fightingGreenskins = true;
+				break;
+			}
+		}
+
+		if (fightingGreenskins) {
+			spawnIcon("trait_icon_49", actor.getTile());
+
+			if (actor.getMoraleState() > Const.MoraleState.Wavering)
+				actor.setMoraleState(Const.MoraleState.Wavering);
+		}
+	});
+});
+
+::mods_hookExactClass("skills/traits/fear_undead_trait", function(fut) {
+	local getTooltip = ::mods_getMember(fut, "getTooltip");
+	local onCombatStarted = ::mods_getMember(fut, "onCombatStarted");
+
+	::mods_override(fut, "getTooltip", function() {
+		local ret = getTooltip();
+
+		ret.pop();
+
+		ret.extend([ { id = 10, type = "text", icon = "ui/icons/morale.png", text = "Will start combat against undead at wavering morale" } ]);
+
+		return ret;
+	});
+
+	::mods_override(fut, "onCombatStarted", function() {
+		onCombatStarted();
+
+		local actor = getContainer().getActor();
+
+		if (!actor.isPlacedOnMap())
+			return;
+
+		local fightingUndead = false;
+		local enemies = Tactical.Entities.getAllHostilesAsArray();
+
+		foreach (enemy in enemies) {
+			if (Const.EntityType.getDefaultFaction(enemy.getType()) == Const.FactionType.Zombies || Const.EntityType.getDefaultFaction(enemy.getType()) == Const.FactionType.Undead) {
+				fightingUndead = true;
+				break;
+			}
+		}
+
+		if (fightingUndead) {
+			spawnIcon("trait_icon_47", actor.getTile());
+
+			if (actor.getMoraleState() > Const.MoraleState.Wavering)
+				actor.setMoraleState(Const.MoraleState.Wavering);
+		}
+	});
+});
+
+::mods_hookExactClass("skills/traits/hate_beasts_trait", function(hbt) {
+	local getTooltip = ::mods_getMember(hbt, "getTooltip");
+	local onCombatStarted = ::mods_getMember(hbt, "onCombatStarted");
+
+	::mods_override(hbt, "getTooltip", function() {
+		local ret = getTooltip();
+
+		ret.pop();
+
+		ret.extend([ { id = 10, type = "text", icon = "ui/icons/morale.png", text = "Will start combat against beasts at confident morale if permitted by mood" } ]);
+
+		return ret;
+	});
+
+	::mods_override(hbt, "onCombatStarted", function() {
+		onCombatStarted();
+
+		local actor = getContainer().getActor();
+
+		if (!actor.isPlacedOnMap())
+			return;
+
+		local fightingBeasts = false;
+		local enemies = Tactical.Entities.getAllHostilesAsArray();
+
+		foreach (enemy in enemies) {
+			if (Const.EntityType.getDefaultFaction(enemy.getType()) == Const.FactionType.Beasts || enemy.getType() == Const.EntityType.BarbarianUnhold || enemy.getType() == Const.EntityType.BarbarianUnholdFrost) {
+				fightingBeasts = true;
+				break;
+			}
+		}
+
+		if (fightingBeasts) {
+			spawnIcon("trait_icon_51", actor.getTile());
+
+			if (actor.getMoodState() >= Const.MoodState.Neutral && actor.getMoraleState() < Const.MoraleState.Confident)
+				actor.setMoraleState(Const.MoraleState.Confident);
+		}
+	});
+});
+
+::mods_hookExactClass("skills/traits/hate_greenskins_trait", function(hgt) {
+	local getTooltip = ::mods_getMember(hgt, "getTooltip");
+	local onCombatStarted = ::mods_getMember(hgt, "onCombatStarted");
+
+	::mods_override(hgt, "getTooltip", function() {
+		local ret = getTooltip();
+
+		ret.pop();
+
+		ret.extend([ { id = 10, type = "text", icon = "ui/icons/morale.png", text = "Will start combat against greenskins at confident morale if permitted by mood" } ]);
+
+		return ret;
+	});
+
+	::mods_override(hgt, "onCombatStarted", function() {
+		onCombatStarted();
+
+		local actor = getContainer().getActor();
+
+		if (!actor.isPlacedOnMap())
+			return;
+
+		local fightingGreenskins = false;
+		local enemies = Tactical.Entities.getAllHostilesAsArray();
+
+		foreach (enemy in enemies) {
+			if (Const.EntityType.getDefaultFaction(enemy.getType()) == Const.FactionType.Orcs || Const.EntityType.getDefaultFaction(enemy.getType()) == Const.FactionType.Goblins) {
+				fightingGreenskins = true;
+				break;
+			}
+		}
+
+		if (fightingGreenskins) {
+			spawnIcon("trait_icon_52", actor.getTile());
+
+			if (actor.getMoodState() >= Const.MoodState.Neutral && actor.getMoraleState() < Const.MoraleState.Confident)
+				actor.setMoraleState(Const.MoraleState.Confident);
+		}
+	});
+});
+
+::mods_hookExactClass("skills/traits/hate_undead_trait", function(hut) {
+	local getTooltip = ::mods_getMember(hut, "getTooltip");
+	local onCombatStarted = ::mods_getMember(hut, "onCombatStarted");
+
+	::mods_override(hut, "getTooltip", function() {
+		local ret = getTooltip();
+
+		ret.pop();
+
+		ret.extend([ { id = 10, type = "text", icon = "ui/icons/morale.png", text = "Will start combat against undead at confident morale if permitted by mood" } ]);
+
+		return ret;
+	});
+
+	::mods_override(hut, "onCombatStarted", function() {
+		onCombatStarted();
+
+		local actor = getContainer().getActor();
+
+		if (!actor.isPlacedOnMap())
+			return;
+
+		local fightingUndead = false;
+		local enemies = Tactical.Entities.getAllHostilesAsArray();
+
+		foreach (enemy in enemies) {
+			if (Const.EntityType.getDefaultFaction(enemy.getType()) == Const.FactionType.Zombies || Const.EntityType.getDefaultFaction(enemy.getType()) == Const.FactionType.Undead) {
+				fightingUndead = true;
+				break;
+			}
+		}
+
+		if (fightingUndead) {
+			spawnIcon("trait_icon_50", actor.getTile());
+
+			if (actor.getMoodState() >= Const.MoodState.Neutral && actor.getMoraleState() < Const.MoraleState.Confident)
+				actor.setMoraleState(Const.MoraleState.Confident);
+		}
 	});
 });

@@ -15,18 +15,20 @@ A mod for the game Battle Brothers ([Steam](https://store.steampowered.com/app/3
 
 Rebalances a number game elements, particularly weapons, that I felt were out of sync with the game's overall design. Any balance change in a game as tightly balanced as Battle Brothers will likely be controversial, so I don't expect these to appeal to everyone - but, for what it's worth, every change comes from a conversation I've had with the devs or beta testers and has gone through at least a couple rounds of polish and iteration.
 
-This mod doesn't touch enemies themselves - for that, look at my [enemy rebalance mod](https://github.com/jcsato/sato_enemy_balance_mod).
+This mod doesn't change enemies directly - for that, look at my [enemy rebalance mod](https://github.com/jcsato/sato_enemy_balance_mod).
 
-**Named Weapons:**
-- Named Weapon armor penetration now rolls +6-12% (down from +8-16%)
-- Named Weapon armor effectiveness now rolls +15-35% (up from 10-30%)
-- Named Weapons will no longer roll for reduced Fatigue on equip at all (reduced Fatigue build up on skill use is still possible)
+This mod also doesn't add new effects to the game. Balance changes that necessitate wholly new effects can be found in my [combat effects mod](https://github.com/jcsato/sato_combat_effects)
+
+**Stats:**
+- All character backgrounds get +5 minimum and maximum Fatigue
+- All character backgrounds get +3 minimum and maximum Ranged Skill, except Ranged Nomads who get +2 and Hunters who get +1
 
 **Perks:**
-- The damage reduction granted by Nimble is now halved for blows struck against body parts with no armor (e.g. after armor is destroyed)
+- Recover now reduces Fatigue by a minimum of 30
 - Dagger Mastery now reduces the hit malus of Puncture to -10 (from -15)
 - Sword Mastery no longer removes the hit malus of Riposte, instead granting +5 Melee Defense while Riposting if the offhand is free
 - Lone Wolf now grants a +10% stat bonus at 2 tiles distance from allies (down from a +15% stat bonus at 3 tiles of distance)
+- Nimble's damage reduction is now halved for blows struck against body parts with no armor (e.g. after armor is destroyed)
 - Taunt costs 12 Fatigue (down from 15)
 - Rotation costs 20 Fatigue (down from 25)
 - Footwork costs 18 Fatigue (down from 20)
@@ -39,9 +41,8 @@ This mod doesn't touch enemies themselves - for that, look at my [enemy rebalanc
 - Cocky grants +10 Resolve (up from +5)
 - Tiny reduces Melee Damage by -10% (up from -15%)
 - Weasel grants +20 Melee Defense (down from +25) and is active when retreating OR Fleeing (instead of just when retreating)
-
-**Tryout:**
-- Tryout now grants increased mood and +10% XP Gain for 2 days
+- The Hate Beasts/Greenskins/Undead traits now cause characters to start combat at Confident morale when fighting the relevant opponent, and an icon is displayed at the start of battle to indicate the effect is active
+- The Fear Beasts/Greenskins/Undead traits now cause characters to start combat at Wavering morale when fighting the relevant opponent, and an icon is displayed at the start of battle to indicate the effect is active
 
 **Armor:**
 - Gladiator Helmets now have 220/-12 Durability/Fatigue (from 225/-13)
@@ -58,10 +59,17 @@ This mod doesn't touch enemies themselves - for that, look at my [enemy rebalanc
 - The Aimed Shot skill of Bows now deals an additional +15% damage and has +15% to hit (up from +10% to both)
 - The Lunge skill of Fencing Swords now caps (and scales) at 160 Initiative (down from 175) and can no longer deal below 100% of its damage
 - The Ignite Firelance skill of Firelances now leaves flames on the ground in its attack AoE, like firebombs do
+- The Lash skill of (non-three-headed) one handed flails now has a 50% chance to inflict Daze (100% chance with Mastery)
+- The Split Shield skill now inflicts 10 extra Fatigue
+
+**Named Weapons:**
+- Named Weapon armor penetration now rolls +6-12% (down from +8-16%)
+- Named Weapon armor effectiveness now rolls +15-35% (up from 10-30%)
+- Named Weapons will no longer roll for reduced Fatigue on equip at all (reduced Fatigue build up on skill use is still possible)
 
 **Miscellaneous:**
-- Bandages can now be used while engaged in melee
-- Using bandages on a character confers the new "Vulnerable" status effect to both the user and the patient (or two stacks if self-bandaging), which reduces Melee and Ranged defense by 4 for a turn
+- Undead killed by Holy Water cannot be resurrected
+- Spider and Goblin Poison now last for 6 attacks (up from 4) and cost 1 AP and 10 Fatigue to apply (down from 4 AP and 15 Fatigue)
 - Antidotes now last for 10 turns (up from 3)
 - The War Wolf now has 50/30 innate body/head armor
 
