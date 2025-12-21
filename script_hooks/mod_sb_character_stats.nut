@@ -5,11 +5,11 @@
 		local change = onChangeAttributes();
 
 		// Increase all bro's baseline Fatigue by +5 and Ranged Skill by +3
-		change.Stamina[0] += 5;
-		change.Stamina[1] += 5;
+		change.Stamina[0] += ::SB.AttributeIncreaseFatigue;
+		change.Stamina[1] += ::SB.AttributeIncreaseFatigue;
 
-		change.RangedSkill[0] += 3;
-		change.RangedSkill[1] += 3;
+		change.RangedSkill[0] += ::SB.AttributeIncreaseRangedSkill;
+		change.RangedSkill[1] += ::SB.AttributeIncreaseRangedSkill;
 
 		// Lower Ranged Skill increase to +1 for Hunters and +2 for Ranged Nomads
 		if (m.ID == "background.hunter") {

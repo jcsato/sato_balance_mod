@@ -1,6 +1,4 @@
 ::mods_hookExactClass("items/weapons/named/named_weapon", function(nw) {
-	local randomizeValues = ::mods_getMember(nw, "randomizeValues");
-
 	local newRandomizeValues = function() {
 		if (m.ConditionMax > 1) {
 			m.Condition = Math.round(m.Condition * Math.rand(90, 140) * 0.01) * 1.0;
@@ -14,7 +12,7 @@
 			_i.m.RegularDamageMax = Math.round(_i.m.RegularDamageMax * f);
 		});
 		available.push(function ( _i ) {
-			_i.m.ArmorDamageMult = _i.m.ArmorDamageMult + Math.rand(15, 35) * 0.01;
+			_i.m.ArmorDamageMult = _i.m.ArmorDamageMult + Math.rand(::SB.NamedWeaponEffectivenessLower, ::SB.NamedWeaponEffectivenessUpper) * 0.01;
 		});
 
 		if (m.ChanceToHitHead > 0) {
@@ -24,7 +22,7 @@
 		}
 
 		available.push(function ( _i ) {
-			_i.m.DirectDamageAdd = _i.m.DirectDamageAdd + Math.rand(6, 12) * 0.01;
+			_i.m.DirectDamageAdd = _i.m.DirectDamageAdd + Math.rand(::SB.NamedWeaponPenetrationLower, ::SB.NamedWeaponPenetrationUpper) * 0.01;
 		});
 
 		// if (m.StaminaModifier <= -10) {
@@ -56,7 +54,7 @@
 			_i.m.FatigueOnSkillUse = _i.m.FatigueOnSkillUse - Math.rand(1, 3);
 		});
 
-		for( local n = 2; n != 0 && available.len() != 0; n = --n ) {
+		for ( local n = 2; n != 0 && available.len() != 0; n = --n ) {
 			local r = Math.rand(0, available.len() - 1);
 			available[r](this);
 			available.remove(r);

@@ -105,8 +105,6 @@
 	::mods_override(fbt, "getTooltip", function() {
 		local ret = getTooltip();
 
-		ret.pop();
-
 		ret.extend([ { id = 10, type = "text", icon = "ui/icons/morale.png", text = "Will start combat against beasts at wavering morale" } ]);
 
 		return ret;
@@ -115,27 +113,7 @@
 	::mods_override(fbt, "onCombatStarted", function() {
 		onCombatStarted();
 
-		local actor = getContainer().getActor();
-
-		if (!actor.isPlacedOnMap())
-			return;
-
-		local fightingBeasts = false;
-		local enemies = Tactical.Entities.getAllHostilesAsArray();
-
-		foreach (enemy in enemies) {
-			if (Const.EntityType.getDefaultFaction(enemy.getType()) == Const.FactionType.Beasts || enemy.getType() == Const.EntityType.BarbarianUnhold || enemy.getType() == Const.EntityType.BarbarianUnholdFrost) {
-				fightingBeasts = true;
-				break;
-			}
-		}
-
-		if (fightingBeasts) {
-			spawnIcon("trait_icon_48", actor.getTile());
-
-			if (actor.getMoraleState() > Const.MoraleState.Wavering)
-				actor.setMoraleState(Const.MoraleState.Wavering);
-		}
+		::SB.Helpers.fearHateCombatStart(this, ::SB.Helpers.isBeast, ::SB.Helpers.makeWavering);
 	});
 });
 
@@ -146,8 +124,6 @@
 	::mods_override(fgt, "getTooltip", function() {
 		local ret = getTooltip();
 
-		ret.pop();
-
 		ret.extend([ { id = 10, type = "text", icon = "ui/icons/morale.png", text = "Will start combat against greenskins at wavering morale" } ]);
 
 		return ret;
@@ -156,27 +132,7 @@
 	::mods_override(fgt, "onCombatStarted", function() {
 		onCombatStarted();
 
-		local actor = getContainer().getActor();
-
-		if (!actor.isPlacedOnMap())
-			return;
-
-		local fightingGreenskins = false;
-		local enemies = Tactical.Entities.getAllHostilesAsArray();
-
-		foreach (enemy in enemies) {
-			if (Const.EntityType.getDefaultFaction(enemy.getType()) == Const.FactionType.Orcs || Const.EntityType.getDefaultFaction(enemy.getType()) == Const.FactionType.Goblins) {
-				fightingGreenskins = true;
-				break;
-			}
-		}
-
-		if (fightingGreenskins) {
-			spawnIcon("trait_icon_49", actor.getTile());
-
-			if (actor.getMoraleState() > Const.MoraleState.Wavering)
-				actor.setMoraleState(Const.MoraleState.Wavering);
-		}
+		::SB.Helpers.fearHateCombatStart(this, ::SB.Helpers.isGreenskin, ::SB.Helpers.makeWavering);
 	});
 });
 
@@ -187,8 +143,6 @@
 	::mods_override(fut, "getTooltip", function() {
 		local ret = getTooltip();
 
-		ret.pop();
-
 		ret.extend([ { id = 10, type = "text", icon = "ui/icons/morale.png", text = "Will start combat against undead at wavering morale" } ]);
 
 		return ret;
@@ -197,27 +151,7 @@
 	::mods_override(fut, "onCombatStarted", function() {
 		onCombatStarted();
 
-		local actor = getContainer().getActor();
-
-		if (!actor.isPlacedOnMap())
-			return;
-
-		local fightingUndead = false;
-		local enemies = Tactical.Entities.getAllHostilesAsArray();
-
-		foreach (enemy in enemies) {
-			if (Const.EntityType.getDefaultFaction(enemy.getType()) == Const.FactionType.Zombies || Const.EntityType.getDefaultFaction(enemy.getType()) == Const.FactionType.Undead) {
-				fightingUndead = true;
-				break;
-			}
-		}
-
-		if (fightingUndead) {
-			spawnIcon("trait_icon_47", actor.getTile());
-
-			if (actor.getMoraleState() > Const.MoraleState.Wavering)
-				actor.setMoraleState(Const.MoraleState.Wavering);
-		}
+		::SB.Helpers.fearHateCombatStart(this, ::SB.Helpers.isUndead, ::SB.Helpers.makeWavering);
 	});
 });
 
@@ -228,8 +162,6 @@
 	::mods_override(hbt, "getTooltip", function() {
 		local ret = getTooltip();
 
-		ret.pop();
-
 		ret.extend([ { id = 10, type = "text", icon = "ui/icons/morale.png", text = "Will start combat against beasts at confident morale if permitted by mood" } ]);
 
 		return ret;
@@ -238,27 +170,7 @@
 	::mods_override(hbt, "onCombatStarted", function() {
 		onCombatStarted();
 
-		local actor = getContainer().getActor();
-
-		if (!actor.isPlacedOnMap())
-			return;
-
-		local fightingBeasts = false;
-		local enemies = Tactical.Entities.getAllHostilesAsArray();
-
-		foreach (enemy in enemies) {
-			if (Const.EntityType.getDefaultFaction(enemy.getType()) == Const.FactionType.Beasts || enemy.getType() == Const.EntityType.BarbarianUnhold || enemy.getType() == Const.EntityType.BarbarianUnholdFrost) {
-				fightingBeasts = true;
-				break;
-			}
-		}
-
-		if (fightingBeasts) {
-			spawnIcon("trait_icon_51", actor.getTile());
-
-			if (actor.getMoodState() >= Const.MoodState.Neutral && actor.getMoraleState() < Const.MoraleState.Confident)
-				actor.setMoraleState(Const.MoraleState.Confident);
-		}
+		::SB.Helpers.fearHateCombatStart(this, ::SB.Helpers.isBeast, ::SB.Helpers.makeConfident);
 	});
 });
 
@@ -269,8 +181,6 @@
 	::mods_override(hgt, "getTooltip", function() {
 		local ret = getTooltip();
 
-		ret.pop();
-
 		ret.extend([ { id = 10, type = "text", icon = "ui/icons/morale.png", text = "Will start combat against greenskins at confident morale if permitted by mood" } ]);
 
 		return ret;
@@ -279,27 +189,7 @@
 	::mods_override(hgt, "onCombatStarted", function() {
 		onCombatStarted();
 
-		local actor = getContainer().getActor();
-
-		if (!actor.isPlacedOnMap())
-			return;
-
-		local fightingGreenskins = false;
-		local enemies = Tactical.Entities.getAllHostilesAsArray();
-
-		foreach (enemy in enemies) {
-			if (Const.EntityType.getDefaultFaction(enemy.getType()) == Const.FactionType.Orcs || Const.EntityType.getDefaultFaction(enemy.getType()) == Const.FactionType.Goblins) {
-				fightingGreenskins = true;
-				break;
-			}
-		}
-
-		if (fightingGreenskins) {
-			spawnIcon("trait_icon_52", actor.getTile());
-
-			if (actor.getMoodState() >= Const.MoodState.Neutral && actor.getMoraleState() < Const.MoraleState.Confident)
-				actor.setMoraleState(Const.MoraleState.Confident);
-		}
+		::SB.Helpers.fearHateCombatStart(this, ::SB.Helpers.isGreenskin, ::SB.Helpers.makeConfident);
 	});
 });
 
@@ -310,8 +200,6 @@
 	::mods_override(hut, "getTooltip", function() {
 		local ret = getTooltip();
 
-		ret.pop();
-
 		ret.extend([ { id = 10, type = "text", icon = "ui/icons/morale.png", text = "Will start combat against undead at confident morale if permitted by mood" } ]);
 
 		return ret;
@@ -320,26 +208,6 @@
 	::mods_override(hut, "onCombatStarted", function() {
 		onCombatStarted();
 
-		local actor = getContainer().getActor();
-
-		if (!actor.isPlacedOnMap())
-			return;
-
-		local fightingUndead = false;
-		local enemies = Tactical.Entities.getAllHostilesAsArray();
-
-		foreach (enemy in enemies) {
-			if (Const.EntityType.getDefaultFaction(enemy.getType()) == Const.FactionType.Zombies || Const.EntityType.getDefaultFaction(enemy.getType()) == Const.FactionType.Undead) {
-				fightingUndead = true;
-				break;
-			}
-		}
-
-		if (fightingUndead) {
-			spawnIcon("trait_icon_50", actor.getTile());
-
-			if (actor.getMoodState() >= Const.MoodState.Neutral && actor.getMoraleState() < Const.MoraleState.Confident)
-				actor.setMoraleState(Const.MoraleState.Confident);
-		}
+		::SB.Helpers.fearHateCombatStart(this, ::SB.Helpers.isUndead, ::SB.Helpers.makeConfident);
 	});
 });

@@ -1,6 +1,8 @@
-::mods_registerMod("sato_balance_mod", 2.1, "Sato's Balance Mod");
+::mods_registerMod("sato_balance_mod", 2.2, "Sato's Balance Mod");
 
 ::mods_queue("sato_balance_mod", null, function() {
+	::include("script_hooks/!sb_constants");
+	::include("script_hooks/!sb_helpers");
 	::include("script_hooks/mod_sb_armor");
 	::include("script_hooks/mod_sb_character_stats");
 	::include("script_hooks/mod_sb_holy_water");
