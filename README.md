@@ -25,6 +25,7 @@ This mod also doesn't add new effects to the game. Balance changes that necessit
 
 **Perks:**
 - Recover now reduces Fatigue by a minimum of 30
+- Executioner now grants an additional +5% damage for each injury beyond the first
 - Dagger Mastery now reduces the hit malus of Puncture to -10 (from -15)
 - Sword Mastery no longer removes the hit malus of Riposte, instead granting +5 Melee Defense while Riposting if the offhand is free
 - Lone Wolf now grants a +10% stat bonus at 2 tiles distance from allies (down from a +15% stat bonus at 3 tiles of distance)
@@ -48,6 +49,7 @@ This mod also doesn't add new effects to the game. Balance changes that necessit
 - Gladiator Helmets now have 220/-12 Durability/Fatigue (from 225/-13)
 
 **Weapons:**
+- Light Southern Maces now have a value of 500 crowns (up from 400)
 - Handgonnes now deal 40-70 (from 35-75)
 - Greatswords now deal 85-105 damage at 30% armor penetration (up from 85-100 at 25%)
 - Heavy Rusty Axes now deal 70-90 damage (down from 75-90)
@@ -68,6 +70,7 @@ This mod also doesn't add new effects to the game. Balance changes that necessit
 - Named Weapons will no longer roll for reduced Fatigue on equip at all (reduced Fatigue build up on skill use is still possible)
 
 **Miscellaneous:**
+- Bros are no longer paid daily wages on their first day with the company if hired before noon
 - Undead killed by Holy Water cannot be resurrected
 - Spider and Goblin Poison now last for 6 attacks (up from 4) and cost 1 AP and 10 Fatigue to apply (down from 4 AP and 15 Fatigue)
 - Antidotes now last for 10 turns (up from 3)

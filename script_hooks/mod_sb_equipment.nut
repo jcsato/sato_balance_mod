@@ -11,3 +11,7 @@
 		}
 	}
 });
+
+::mods_hookNewObject("items/weapons/oriental/light_southern_mace", function(lsm) {
+	::mods_overrideField(lsm, "Value", 500);
+});

@@ -3,6 +3,11 @@ local perk = ::Const.Perks.Perks[0][7];
 if (perk.ID == "perk.recover")
 	perk.Tooltip = ::Const.Strings.PerkDescription.Recover;
 
+::Const.Strings.PerkDescription.CoupDeGrace = "Inflict additional [color=" + Const.UI.Color.PositiveValue + "]20%[/color] damage against targets that have sustained any injury effects, like a broken arm, and an additional [color=" + Const.UI.Color.PositiveValue + "]5%[/color] for each injury beyond the first.";
+local perk = ::Const.Perks.Perks[1][0];
+if (perk.ID == "perk.coup_de_grace")
+	perk.Tooltip = ::Const.Strings.PerkDescription.CoupDeGrace;
+
 ::Const.Strings.PerkDescription.SpecFlail = "Master flails and circumvent your opponent's shield. Skills build up [color=" + Const.UI.Color.NegativeValue + "]25%[/color] less Fatigue.\n\nLash and Hail ignore the defense bonus of shields, and Lash has a [color=" + Const.UI.Color.PositiveValue + "]100%[/color] chance to Daze the target if not immune.\n\nPound ignores an additional [color=" + Const.UI.Color.PositiveValue + "]+10%[/color] of armor on head hits.\n\nThresh gains [color=" + Const.UI.Color.PositiveValue + "]+5%[/color] chance to hit.";
 local perk = ::Const.Perks.Perks[3][1];
 if (perk.ID == "perk.mastery.flail")
@@ -27,6 +32,26 @@ if (perk.ID == "perk.lone_wolf")
 local perk = ::Const.Perks.Perks[5][2];
 if (perk.ID == "perk.nimble")
 	perk.Tooltip = ::Const.Strings.PerkDescription.Nimble;
+
+::mods_hookExactClass("skills/perks/perk_coup_de_grace", function(pcdg) {
+	local onAnySkillUsed = ::mods_getMember(pcdg, "onAnySkillUsed");
+
+	::mods_override(pcdg, "onAnySkillUsed", function(_skill, _targetEntity, _properties) {
+		local originalMult = _properties.DamageTotalMult;
+
+		// call onAnySkillUsed for compatibility, then overwrite its result
+		onAnySkillUsed(_skill, _targetEntity, _properties);
+
+		_properties.DamageTotalMult = originalMult;
+
+		if (_targetEntity == null)
+			return;
+
+		local numInjuries = _targetEntity.getSkills().getAllSkillsOfType(Const.SkillType.TemporaryInjury).len();
+		if (_skill.isAttack() && numInjuries > 0)
+			_properties.DamageTotalMult *= (1.2 + (0.05 * (numInjuries - 1)));
+	});
+});
 
 ::mods_hookExactClass("skills/actives/riposte", function(r) {
 	local getTooltip = ::mods_getMember(r, "getTooltip");

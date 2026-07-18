@@ -5,7 +5,7 @@
 	local generateCorpse = ::mods_getMember(s, "generateCorpse");
 
 	::mods_override(s, "onDeath", function(_killer, _skill, _tile, _fatalityType) {
-		if (_skill.getID() == "effects.holy_water")
+		if (_skill != null && _skill.getID() == "effects.holy_water")
 			m.IsResurrectable = false;
 
 		onDeath(_killer, _skill, _tile, _fatalityType);
@@ -25,7 +25,7 @@
 	local generateCorpse = ::mods_getMember(z, "generateCorpse");
 
 	::mods_override(z, "onDeath", function(_killer, _skill, _tile, _fatalityType) {
-		if (_skill.getID() == "effects.holy_water")
+		if (_skill != null && _skill.getID() == "effects.holy_water")
 			m.IsResurrectable = false;
 
 		onDeath(_killer, _skill, _tile, _fatalityType);
