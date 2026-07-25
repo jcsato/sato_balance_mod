@@ -1,4 +1,4 @@
-::mods_registerMod("sato_balance_mod", 2.3, "Sato's Balance Mod");
+::mods_registerMod("sato_balance_mod", 2.3.1, "Sato's Balance Mod");
 
 ::mods_queue("sato_balance_mod", null, function() {
 	::include("script_hooks/!sb_constants");

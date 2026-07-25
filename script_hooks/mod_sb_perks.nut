@@ -18,7 +18,7 @@ local perk = ::Const.Perks.Perks[3][5];
 if (perk.ID == "perk.mastery.sword")
 	perk.Tooltip = ::Const.Strings.PerkDescription.SpecSword;
 
-::Const.Strings.PerkDescription.SpecDagger = "Master swift and deadly daggers. Skills build up [color=" + Const.UI.Color.NegativeValue + "]25%[/color] less Fatigue.\n\nStab, Puncture and Deathblow have a reduced Action Point cost to allow for an additional attack each turn.\n\nPuncture gains [color=" + Const.UI.Color.PositiveValue + "]+5%[/color] chance to hit.";
+::Const.Strings.PerkDescription.SpecDagger = "Master swift and deadly daggers. Skills build up [color=" + Const.UI.Color.NegativeValue + "]25%[/color] less Fatigue.\n\nStab, Puncture, Deathblow, Perforate, and Skewer have a reduced Action Point cost, potentially allowing for an additional attack each turn.\n\nPuncture gains [color=" + Const.UI.Color.PositiveValue + "]+5%[/color] chance to hit.";
 local perk = ::Const.Perks.Perks[3][6];
 if (perk.ID == "perk.mastery.dagger")
 	perk.Tooltip = ::Const.Strings.PerkDescription.SpecDagger;

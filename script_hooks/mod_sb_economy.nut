@@ -11,7 +11,7 @@
 		// starting bros on day 2
 		local dayWithCompany = Math.round((Time.getVirtualTimeF() - m.HireTime) / World.getTime().SecondsPerDay);
 
-		if (getDaysWithCompany() < 1.0)
+		if (m.HireTime > 0.0 && dayWithCompany < 1.0)
 			return 0;
 
 		return getDailyCost();
